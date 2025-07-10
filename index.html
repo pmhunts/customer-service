@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Customer Experience Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 2, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #7c3aed;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            border-color: #7c3aed;
+            color: #7c3aed;
+        }
+
+        .tab.active {
+            background: #7c3aed;
+            color: white;
+            border-color: #7c3aed;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #7c3aed;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #7c3aed;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .demo-area {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .chat-interface {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f8fafc;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            max-width: 70%;
+        }
+
+        .message.user {
+            background: #3b82f6;
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.ai {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .input-area button {
+            padding: 0.75rem 1.5rem;
+            background: #7c3aed;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .input-area button:hover {
+            background: #6d28d9;
+        }
+
+        .ar-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .ar-demo:hover {
+            transform: scale(1.05);
+        }
+
+        .ar-demo.active {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .video-interface {
+            background: #1f2937;
+            height: 300px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-interface video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .video-interface .placeholder-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .video-interface:hover {
+            background: #374151;
+        }
+
+        .video-interface.active {
+            background: #059669;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .control-btn {
+            padding: 0.5rem 1rem;
+            background: #4b5563;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #6b7280;
+        }
+
+        .control-btn.active {
+            background: #7c3aed;
+        }
+
+        .control-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .notification {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        .notification.urgent {
+            background: #fee2e2;
+            border-left-color: #ef4444;
+        }
+
+        .notification.success {
+            background: #d1fae5;
+            border-left-color: #10b981;
+        }
+
+        .pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            margin-right: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AI-Powered Customer Experience Platform</h1>
+            <p>Revolutionizing customer interactions with emerging technologies</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showSection('dashboard')">Analytics Dashboard</div>
+            <div class="tab" onclick="showSection('ai-assistant')">AI Assistant</div>
+            <div class="tab" onclick="showSection('immersive')">Immersive Experience</div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div class="section active" id="dashboard">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="activeUsers">1,247</div>
+                    <div class="metric-label">Active Users</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="aiResolution">73%</div>
+                    <div class="metric-label">AI Resolution Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="responseTime">1.2s</div>
+                    <div class="metric-label">Avg Response Time</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="satisfaction">4.8/5</div>
+                    <div class="metric-label">Satisfaction Score</div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🧠 AI-Powered Insights</h3>
+                    <div class="notification">
+                        <strong>Trending Alert:</strong> Wireless earbuds seeing 300% increase in searches
+                    </div>
+                    <div class="notification success">
+                        <strong>Optimization:</strong> AI resolution improved satisfaction by 40%
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🔔 Real-time Notifications</h3>
+                    <div class="notification urgent">
+                        <span class="pulse-dot"></span> Customer sentiment dropping - immediate attention needed
+                    </div>
+                    <div class="notification">
+                        <span class="pulse-dot"></span> High-value customer browsing premium items
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Assistant Section -->
+        <div class="section" id="ai-assistant">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>👤 Customer Profile</h3>
+                    <p><strong>Name:</strong> Sarah Johnson</p>
+                    <p><strong>Tier:</strong> Premium Customer</p>
+                    <p><strong>Satisfaction:</strong> 4.8/5</p>
+                    <p><strong>Last Interaction:</strong> 2 hours ago</p>
+                    <p><strong>Predicted Need:</strong> <span style="color: #f59e0b;">Product Return</span></p>
+                    <p><strong>Sentiment:</strong> <span style="color: #10b981;">Positive</span></p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>💬 AI Chat Interface</h3>
+                    <div class="chat-interface" id="chatInterface">
+                        <div class="message ai">Hello! I'm your AI assistant. How can I help you today?</div>
+                        <div class="message user">I'm looking for a birthday gift for my sister</div>
+                        <div class="message ai">I'd love to help! Based on your previous purchases, I see you often buy thoughtful, personalized items. What's your sister's age and interests?</div>
+                    </div>
+                    <div class="input-area">
+                        <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleEnter(event)">
+                        <button onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Immersive Experience Section -->
+        <div class="section" id="immersive">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🥽 AR Product Visualization</h3>
+                    <div class="ar-demo" id="arDemo" onclick="toggleAR()">
+                        📱 3D Product Preview - Click to Enable AR
+                    </div>
+                    <div class="control-buttons">
+                        <button class="control-btn" onclick="toggleAR()">Toggle AR</button>
+                        <button class="control-btn">Rotate</button>
+                        <button class="control-btn">Info</button>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <h3>📹 Video Customer Support</h3>
+                    <div id="cameraError" class="error-message" style="display: none;"></div>
+                    <div class="video-interface" id="videoInterface" onclick="toggleVideo()">
+                        <video id="videoStream" style="display: none;" autoplay muted playsinline></video>
+                        <div class="placeholder-text" id="videoPlaceholder">
+                            🎥 Start Video Call with AI Assistant
+                        </div>
+                    </div>
+                    <div class="control-buttons">
+                        <button class="control-btn" id="videoBtn" onclick="toggleVideo()">Start Call</button>
+                        <button class="control-btn" id="recordBtn" onclick="toggleRecording()" disabled>Record</button>
+                        <button class="control-btn">Share Screen</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-area">
+                <h3>🎯 Key Features Demonstration</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Real-time Personalization</h3>
+                        <p>AI adapts interface and recommendations based on user behavior patterns and preferences.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Predictive Analytics</h3>
+                        <p>Anticipates customer needs before they express them, enabling proactive support.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Omnichannel Integration</h3>
+                        <p>Seamless experience across web, mobile, AR/VR, and voice interfaces.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let arActive = false;
+        let videoActive = false;
+        let recordingActive = false;
+        let messageCount = 3;
+        let mediaStream = null;
+        let mediaRecorder = null;
+        let recordedChunks = [];
+
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const chat = document.getElementById('chatInterface');
+            
+            if (input.value.trim()) {
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.textContent = input.value;
+                chat.appendChild(userMessage);
+                
+                // Clear input
+                const messageText = input.value;
+                input.value = '';
+                
+                // Show loading AI message
+                const loadingMessage = document.createElement('div');
+                loadingMessage.className = 'message ai';
+                loadingMessage.textContent = 'Thinking...';
+                chat.appendChild(loadingMessage);
+                chat.scrollTop = chat.scrollHeight;
+                
+                try {
+                    // Make API call to your server
+                    const response = await fetch('http://localhost:3000/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ message: messageText })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    loadingMessage.textContent = data.response || 'Sorry, I could not get a response.';
+                    
+                } catch (error) {
+                    console.error('Error calling AI service:', error);
+                    loadingMessage.textContent = 'Sorry, I\'m having trouble connecting to the AI service. Please try again.';
+                }
+                
+                chat.scrollTop = chat.scrollHeight;
+            }
+        }
+
+        function generateAIResponse(message) {
+            const responses = [
+                "I understand! Let me analyze your preferences and suggest some personalized options.",
+                "Based on your interaction history, I can recommend some great choices for you.",
+                "That's a thoughtful request. I can help you find the perfect match based on your sister's interests.",
+                "I've found some similar items that other customers with your profile have loved.",
+                "Let me access our recommendation engine to provide you with the best options."
+            ];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function toggleAR() {
+            const arDemo = document.getElementById('arDemo');
+            arActive = !arActive;
+            
+            if (arActive) {
+                arDemo.innerHTML = '🎯 AR View Active - Product in Your Space';
+                arDemo.classList.add('active');
+            } else {
+                arDemo.innerHTML = '📱 3D Product Preview - Click to Enable AR';
+                arDemo.classList.remove('active');
+            }
+        }
+
+        async function toggleVideo() {
+            const videoInterface = document.getElementById('videoInterface');
+            const videoBtn = document.getElementById('videoBtn');
+            const recordBtn = document.getElementById('recordBtn');
+            const videoStream = document.getElementById('videoStream');
+            const videoPlaceholder = document.getElementById('videoPlaceholder');
+            const cameraError = document.getElementById('cameraError');
+            
+            if (!videoActive) {
+                // Start video call
+                try {
+                    videoBtn.textContent = 'Starting...';
+                    videoBtn.disabled = true;
+                    cameraError.style.display = 'none';
+                    
+                    // Request camera access
+                    mediaStream = await navigator.mediaDevices.getUserMedia({
+                        video: {
+                            width: { ideal: 640 },
+                            height: { ideal: 480 }
+                        },
+                        audio: true
+                    });
+                    
+                    // Display video stream
+                    videoStream.srcObject = mediaStream;
+                    videoStream.style.display = 'block';
+                    videoPlaceholder.style.display = 'none';
+                    
+                    videoInterface.classList.add('active');
+                    videoBtn.textContent = 'End Call';
+                    videoBtn.disabled = false;
+                    recordBtn.disabled = false;
+                    videoActive = true;
+                    
+                } catch (error) {
+                    console.error('Error accessing camera:', error);
+                    let errorMessage = 'Unable to access camera. ';
+                    
+                    if (error.name === 'NotAllowedError') {
+                        errorMessage += 'Please allow camera access and try again.';
+                    } else if (error.name === 'NotFoundError') {
+                        errorMessage += 'No camera found on this device.';
+                    } else if (error.name === 'NotReadableError') {
+                        errorMessage += 'Camera is already in use by another application.';
+                    } else {
+                        errorMessage += 'Please check your camera settings and try again.';
+                    }
+                    
+                    cameraError.textContent = errorMessage;
+                    cameraError.style.display = 'block';
+                    videoBtn.textContent = 'Start Call';
+                    videoBtn.disabled = false;
+                }
+            } else {
+                // End video call
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(track => track.stop());
+                    mediaStream = null;
+                }
+                
+                if (mediaRecorder && recordingActive) {
+                    mediaRecorder.stop();
+                    recordingActive = false;
+                }
+                
+                videoStream.style.display = 'none';
+                videoPlaceholder.style.display = 'block';
+                videoPlaceholder.textContent = '🎥 Start Video Call with AI Assistant';
+                videoInterface.classList.remove('active');
+                videoBtn.textContent = 'Start Call';
+                recordBtn.disabled = true;
+                recordBtn.textContent = 'Record';
+                recordBtn.style.background = '#4b5563';
+                videoActive = false;
+            }
+        }
+
+        function toggleRecording() {
+            const recordBtn = document.getElementById('recordBtn');
+            
+            if (!recordingActive && mediaStream) {
+                // Start recording
+                recordedChunks = [];
+                mediaRecorder = new MediaRecorder(mediaStream);
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        recordedChunks.push(event.data);
+                    }
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'video-call-recording.webm';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                };
+                
+                mediaRecorder.start();
+                recordingActive = true;
+                recordBtn.textContent = 'Stop Recording';
+                recordBtn.style.background = '#ef4444';
+                
+                // Auto-stop recording after 30 seconds
+                setTimeout(() => {
+                    if (recordingActive && mediaRecorder) {
+                        mediaRecorder.stop();
+                        recordingActive = false;
+                        recordBtn.textContent = 'Record';
+                        recordBtn.style.background = '#4b5563';
+                    }
+                }, 30000);
+                
+            } else if (recordingActive && mediaRecorder) {
+                // Stop recording
+                mediaRecorder.stop();
+                recordingActive = false;
+                recordBtn.textContent = 'Record';
+                recordBtn.style.background = '#4b5563';
+            }
+        }
+
+        // Simulate real-time data updates
+        setInterval(() => {
+            const metrics = {
+                activeUsers: document.getElementById('activeUsers'),
+                aiResolution: document.getElementById('aiResolution'),
+                responseTime: document.getElementById('responseTime'),
+                satisfaction: document.getElementById('satisfaction')
+            };
+            
+            // Update metrics with small random changes
+            const currentUsers = parseInt(metrics.activeUsers.textContent.replace(',', ''));
+            metrics.activeUsers.textContent = (currentUsers + Math.floor(Math.random() * 20 - 10)).toLocaleString();
+            
+            const currentResolution = parseFloat(metrics.aiResolution.textContent);
+            metrics.aiResolution.textContent = (currentResolution + (Math.random() * 2 - 1)).toFixed(1) + '%';
+            
+            const currentTime = parseFloat(metrics.responseTime.textContent);
+            metrics.responseTime.textContent = Math.max(0.8, currentTime + (Math.random() * 0.2 - 0.1)).toFixed(1) + 's';
+            
+            const currentSatisfaction = parseFloat(metrics.satisfaction.textContent);
+            metrics.satisfaction.textContent = Math.min(5, Math.max(4, currentSatisfaction + (Math.random() * 0.2 - 0.1))).toFixed(1) + '/5';
+        }, 3000);
+
+        // Clean up media stream when page is unloaded
+        window.addEventListener('beforeunload', () => {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+</body>
+</html>
